@@ -8,7 +8,7 @@ const rl = readline.createInterface({
 
 let tasks = [];
 
-const addTask = (description) => {
+const addTask = async (description) => {
     const task = {
         id: tasks.length + 1,
         description,
@@ -16,20 +16,24 @@ const addTask = (description) => {
     };
     tasks.push(task);
     console.log(`Tarea "${description}" añadida.`);
+    return Promise.resolve();
 };
 
-const removeTask = (id) => {
+const removeTask = async (id) => {
     tasks = tasks.filter(task => task.id !== id);
     console.log(`Tarea con id ${id} eliminada.`);
+    return Promise.resolve();
 };
 
-const completeTask = (id) => {
+const completeTask = async (id) => {
     const task = tasks.find(task => task.id === id);
     if (task) {
         task.completed = true;
         console.log(`Tarea con id ${id} completada.`);
+        return Promise.resolve();
     } else {
         console.log(`No se encontró tarea con id ${id}.`);
+        return Promise.reject(new Error(`No se encontró tarea con id ${id}.`));
     }
 };
 
